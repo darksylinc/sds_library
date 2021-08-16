@@ -208,6 +208,21 @@ namespace sds
 		return static_cast<size_t>( position );
 	}
 	//-------------------------------------------------------------------------
+	size_t fstream::getFileSize()
+	{
+		if( !good() )
+		{
+			m_statusBits |= fstream::failbit;
+			return std::numeric_limits<size_t>::max();
+		}
+
+		const size_t currentPos = tell();
+		seek( 0, fstream::end );
+		const size_t fileSize = tell();
+		seek( static_cast<ptrdiff_t>( currentPos ), fstream::beg );
+		return fileSize;
+	}
+	//-------------------------------------------------------------------------
 	int fstream::flush()
 	{
 		if( m_canWrite )

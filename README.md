@@ -35,13 +35,25 @@ And then we started using this functionality on external projects, which is why 
 
 # How to integrate
 
+## Raw integration
+
 There are no fancy build settings.
 
 Simply add `include` folder to your include directories and add all *.cpp and *.mm (iOS) files under the `src` folder.
 
 You're done.
 
-We have a CMakeLists.txt script as an example, but you don't have to use it
+## CMake
+
+We have a CMakeLists.txt script as an example.
+
+Simply do:
+
+`add_subdirectory( sds )`
+
+and then:
+
+`target_link_libraries( my_project sds_library )`
 
 # License
 

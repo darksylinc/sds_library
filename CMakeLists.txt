@@ -3,9 +3,12 @@ project( sds_library )
 
 include( CMake/Bootstrap.cmake )
 
-include_directories( "${CMAKE_CURRENT_SOURCE_DIR}/include" )
-
 add_recursive( ${CMAKE_CURRENT_SOURCE_DIR}/src SOURCES )
 add_recursive( ${CMAKE_CURRENT_SOURCE_DIR}/include HEADERS )
 
-add_library( ${PROJECT_NAME} ${SOURCES} ${HEADERS} )
+add_library( ${PROJECT_NAME} STATIC ${SOURCES} ${HEADERS} )
+
+target_include_directories( ${PROJECT_NAME}
+	PUBLIC
+		"${CMAKE_CURRENT_SOURCE_DIR}/include"
+)

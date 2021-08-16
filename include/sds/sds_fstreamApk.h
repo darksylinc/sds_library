@@ -14,7 +14,11 @@ namespace sds
 	@class fstreamApk
 		fstreamApk is like fstream but actually reads from APK when requested
 
-		NOTE: ms_assetManager must be set externally before using any function
+	@remarks
+		ms_assetManager MUST be set externally before using any function
+
+		We're not using virtual functions. Casting fstreamApk to fstream will produce errors
+		if using the read functions of an APK.
 	*/
 	class fstreamApk : protected fstream
 	{
@@ -59,6 +63,8 @@ namespace sds
 
 		void   seek( ptrdiff_t dir, Whence whence );
 		size_t tell();
+
+		size_t getFileSize();
 
 		using fstream::flush;
 		using fstream::fsync;

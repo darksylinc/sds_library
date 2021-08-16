@@ -175,6 +175,20 @@ namespace sds
 		return static_cast<size_t>( m_currentOffset );
 	}
 	//-------------------------------------------------------------------------
+	size_t fstreamApk::getFileSize()
+	{
+		if( !isBundle() )
+			return fstream::getFileSize();
+
+		if( !good() )
+		{
+			m_statusBits |= fstreamApk::failbit;
+			return std::numeric_limits<size_t>::max();
+		}
+
+		return static_cast<size_t>( AAsset_getLength64( m_aAsset ) );
+	}
+	//-------------------------------------------------------------------------
 	template <>
 	size_t fstreamApk::read<bool>( bool &outValue )
 	{

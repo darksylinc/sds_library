@@ -91,6 +91,14 @@ namespace sds
 		void   seek( ptrdiff_t dir, Whence whence );
 		size_t tell();
 
+		/** Note: Not all implementations cache this value, so don't call it
+			repeatedly unnecessarily
+		@return
+			Size in bytes
+			std::numeric_limits<size_t>::max() on error
+		*/
+		size_t getFileSize();
+
 		int flush();
 
 		/// Implies calling flush()
