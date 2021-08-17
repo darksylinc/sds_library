@@ -93,11 +93,23 @@ namespace sds
 
 		/** Note: Not all implementations cache this value, so don't call it
 			repeatedly unnecessarily
+		@param bRestoreOffset
+			When true, cursor offset is left exactly where it was before calling
+			When false, cursor offset is left undefined
+			(i.e. you *must* call seek() afterwards)
+
+			This is an optimization:
+
+			@code
+				sds::PackageFstream inFile( path, sds::fstream::InputEnd );
+				const size_t fileSize = inFile.getFileSize( false );
+				inFile.seek( 0, sds::fstream::beg );
+			@endcode
 		@return
 			Size in bytes
 			std::numeric_limits<size_t>::max() on error
 		*/
-		size_t getFileSize();
+		size_t getFileSize( const bool bRestoreOffset );
 
 		int flush();
 

@@ -208,7 +208,7 @@ namespace sds
 		return static_cast<size_t>( position );
 	}
 	//-------------------------------------------------------------------------
-	size_t fstream::getFileSize()
+	size_t fstream::getFileSize( const bool bRestoreOffset )
 	{
 		if( !good() )
 		{
@@ -216,10 +216,13 @@ namespace sds
 			return std::numeric_limits<size_t>::max();
 		}
 
-		const size_t currentPos = tell();
+		size_t currentPos = 0u;
+		if( bRestoreOffset )
+			currentPos = tell();
 		seek( 0, fstream::end );
 		const size_t fileSize = tell();
-		seek( static_cast<ptrdiff_t>( currentPos ), fstream::beg );
+		if( bRestoreOffset )
+			seek( static_cast<ptrdiff_t>( currentPos ), fstream::beg );
 		return fileSize;
 	}
 	//-------------------------------------------------------------------------

@@ -64,7 +64,7 @@ namespace sds
 		void   seek( ptrdiff_t dir, Whence whence );
 		size_t tell();
 
-		size_t getFileSize();
+		size_t getFileSize( const bool bRestoreOffset );
 
 		using fstream::flush;
 		using fstream::fsync;

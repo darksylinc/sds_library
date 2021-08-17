@@ -175,10 +175,10 @@ namespace sds
 		return static_cast<size_t>( m_currentOffset );
 	}
 	//-------------------------------------------------------------------------
-	size_t fstreamApk::getFileSize()
+	size_t fstreamApk::getFileSize( const bool bRestoreOffset )
 	{
 		if( !isBundle() )
-			return fstream::getFileSize();
+			return fstream::getFileSize( bRestoreOffset );
 
 		if( !good() )
 		{
