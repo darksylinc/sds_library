@@ -67,9 +67,9 @@ namespace sds
 	}
 	//-------------------------------------------------------------------------
 	template <typename T>
-	bool toUintWithDefault( const std::string &value, T defaultValue )
+	T toUintWithDefault( const std::string &value, T defaultValue )
 	{
-		uint32_t retVal;
+		T retVal;
 		const bool bValid = toUint( value, retVal );
 		if( !bValid )
 			retVal = defaultValue;
