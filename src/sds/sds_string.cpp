@@ -23,7 +23,7 @@ namespace sds
 		return output;
 	}
 	//-------------------------------------------------------------------------
-	std::map<std::string, std::string> stringMap( std::vector<std::string> &inputStrings,
+	std::map<std::string, std::string> stringMap( const std::vector<std::string> &inputStrings,
 												  const char separator )
 	{
 		std::map<std::string, std::string> retVal;

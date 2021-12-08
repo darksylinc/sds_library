@@ -34,8 +34,8 @@ namespace sds
 		Empty keys are skipped
 		Empty values are considered
 	*/
-	std::map<std::string, std::string> stringMap( std::vector<std::string> &inputStrings,
-												  const char                separator );
+	std::map<std::string, std::string> stringMap( const std::vector<std::string> &inputStrings,
+												  const char                      separator );
 
 	/** Converts 'value' to an integer into outValue
 	@param value
