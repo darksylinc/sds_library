@@ -169,6 +169,16 @@ namespace sds
 			return;
 		}
 
+		// If we're at EOF and we can't absolutely be sure we're no longer EOF,
+		// then we need the file size to know if we can clear the EOF flag
+		size_t fileSize = 0u;
+		if( is_eof() )
+		{
+			fileSize = tell();  // We're at EOF, so tell() returns file size
+			if( !good() )
+				return;
+		}
+
 		int fileWhence = 0;
 		switch( whence )
 		{
@@ -191,6 +201,16 @@ namespace sds
 
 			if( ferror( m_handle ) != 0 )
 				m_statusBits |= fstream::badbit;
+		}
+		else
+		{
+			// Clear eof bit but only if there are no errors
+			if( m_statusBits == StatusBits::eof )
+			{
+				const size_t currPos = tell();
+				if( currPos < fileSize )
+					m_statusBits = 0u;
+			}
 		}
 	}
 	//-------------------------------------------------------------------------
