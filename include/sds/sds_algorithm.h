@@ -6,6 +6,12 @@
 #include <limits>
 #include <string>
 
+#if defined( __has_builtin )
+#	define SDS_HAS_BUILTIN( x ) __has_builtin( x )
+#else
+#	define SDS_HAS_BUILTIN( x ) 0
+#endif
+
 namespace sds
 {
 	/// Returns true if s1 > s2, checks for wrap-around.
@@ -26,7 +32,7 @@ namespace sds
 	/// Performs the same as std::bit_cast
 	/// i.e. the same as reinterpret_cast but without breaking strict aliasing rules
 	template <class Dest, class Source>
-#if defined __has_builtin && __has_builtin( __builtin_bit_cast )
+#if SDS_HAS_BUILTIN( __builtin_bit_cast ) || _MSC_VER >= 1928
 	constexpr
 #else
 	inline
@@ -34,7 +40,7 @@ namespace sds
 		Dest
 		bit_cast( const Source &source )
 	{
-#if defined __has_builtin && __has_builtin( __builtin_bit_cast )
+#if SDS_HAS_BUILTIN( __builtin_bit_cast ) || _MSC_VER >= 1928
 		return __builtin_bit_cast( Dest, source );
 #else
 		static_assert( sizeof( Dest ) == sizeof( Source ),
