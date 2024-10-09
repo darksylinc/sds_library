@@ -135,11 +135,31 @@ namespace sds
 			return string;
 		}
 
+		std::string readString32()
+		{
+			const uint32_t strLength = read<uint32_t>();
+			std::string    string;
+			string.resize( strLength );
+
+			if( strLength )
+				read( reinterpret_cast<char *>( &string[0] ), strLength );
+
+			return string;
+		}
+
 		/// Same as writeString, but assumes the length is an 8-bit value
 		void writeString8( const std::string &inValue )
 		{
 			const uint8_t strSize = static_cast<uint8_t>( std::min<size_t>( inValue.size(), 255u ) );
 			write<uint8_t>( strSize );
+			write( inValue.c_str(), strSize );
+		}
+
+		void writeString32( const std::string &inValue )
+		{
+			const uint32_t strSize =
+				static_cast<uint32_t>( std::min<size_t>( inValue.size(), 4294967295u ) );
+			write<uint32_t>( strSize );
 			write( inValue.c_str(), strSize );
 		}
 	};

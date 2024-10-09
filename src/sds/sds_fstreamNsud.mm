@@ -3,6 +3,7 @@
 
 #include "sds/sds_fstreamNsud.h"
 
+#include "assert.h"
 #include <limits>
 
 #import <Foundation/NSData.h>
